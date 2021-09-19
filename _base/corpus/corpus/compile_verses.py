@@ -7,7 +7,6 @@ import re
 import sys
 from glob import glob
 
-
 OUTPUT_FILENAME = '../model/verses.json'
 
 RE_CONTAINS_URL = re.compile('https?://')
@@ -66,9 +65,9 @@ def convert_dirs(dirs, export=False):
                 input_lines.pop(0)
 
             # strip trailing whitespace and comments
-            input_lines = (line.split('#', 1)[0].strip()
+            input_lines = [line.split('#', 1)[0].strip()
                            for line in input_lines
-                           if not line.lstrip().startswith('#'))
+                           if not line.lstrip().startswith('#')]
 
             # select all unique verses,
             # where each verse is separated by an empty line
@@ -77,6 +76,10 @@ def convert_dirs(dirs, export=False):
             # primero se lee el objeto string con join
             # luego se crea una lista divida por linea vacía
             # la separación de los haikus
+            print("##########################################")
+            print(input_lines)
+            # print('\n'.join(input_lines))
+            # print('\n'.join(input_lines).split('\n\n'))
             for haiku in '\n'.join(input_lines).split('\n\n'):
                 haiku = haiku.strip().lower()
 
