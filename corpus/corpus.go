@@ -15,7 +15,7 @@ func check(e error) {
 }
 
 func CreateCorpusFromFile(inputFile string, outputFile string) (int, []byte) {
-	file, err := os.Open("./example.txt")
+	file, err := os.Open(inputFile)
 	check(err)
 	scanner := bufio.NewScanner(file)
 	//scanner.Split(bufio.ScanLines)
@@ -35,12 +35,12 @@ func CreateCorpusFromFile(inputFile string, outputFile string) (int, []byte) {
 	haikus := strings.Split(wholeText, "\n\n")
 	haikusLength := len(haikus)
 
-	var haiku_output = make([]map[string]string, haikusLength)
+	haiku_output := make([]map[string]string, haikusLength)
 
 	for index, text := range haikus {
 		verses := strings.Split(text, "\n")
 
-		var buckets [3]string
+		buckets := make([]string, 3)
 
 		for i, verse := range verses {
 			verseWords := strings.Split(verse, " ")

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/yaderv/bustrofedon/corpus"
+	"github.com/yaderv/bustrofedon/haiku"
 )
 
 // Strip trailing whitespace and comments
@@ -11,8 +12,14 @@ import (
 var INPUTFILE = "example.txt"
 var OUTPUTFILE = "corpus.json"
 
-func main() {
+func CreateJSON() {
 	versesNumber, haikusString := corpus.CreateCorpusFromFile(INPUTFILE, OUTPUTFILE)
 	fmt.Printf("verses: %d\n", versesNumber)
 	fmt.Printf("%s Haikus Found\n", haikusString)
+
+}
+
+func main() {
+	haiku := haiku.CreateHaiku(OUTPUTFILE)
+	fmt.Println(haiku)
 }
