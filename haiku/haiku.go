@@ -27,9 +27,24 @@ func CreateHaiku(jsonFile string) string {
 	rand.Seed(time.Now().UnixNano())
 	max := len(haikus)
 	haiku := make([]string, 3)
-	haiku[0] = haikus[rand.Intn(max)].A
-	haiku[1] = haikus[rand.Intn(max)].B
-	haiku[2] = haikus[rand.Intn(max)].C
-	wholeHaiku := strings.Join(haiku, "\n")
-	return strings.ToLower(wholeHaiku)
+
+	firstVerse := strings.ToLower(haikus[rand.Intn(max)].A)
+	lastVerse := strings.ToLower(haikus[rand.Intn(max)].C)
+
+	haiku[0] = TransformFirstVerse(firstVerse)
+	haiku[1] = strings.ToLower(haikus[rand.Intn(max)].B)
+	haiku[2] = TransformLastVerse(lastVerse)
+	return strings.Join(haiku, "\n")
+}
+
+func TransformFirstVerse(verse string) string {
+	return strings.ToUpper(verse[0:1]) + verse[1:]
+}
+
+func TransformLastVerse(verse string) string {
+	char := verse[len(verse)-1:]
+	if char != "." {
+		verse += "."
+	}
+	return verse
 }
