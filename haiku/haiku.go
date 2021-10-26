@@ -29,16 +29,18 @@ func CreateHaiku(jsonFile string) string {
 	haiku := make([]string, 3)
 
 	firstVerse := strings.ToLower(haikus[rand.Intn(max)].A)
+	middleVerse := strings.ToLower(haikus[rand.Intn(max)].B)
 	lastVerse := strings.ToLower(haikus[rand.Intn(max)].C)
 
 	haiku[0] = TransformFirstVerse(firstVerse)
-	haiku[1] = strings.ToLower(haikus[rand.Intn(max)].B)
+	haiku[1] = CreateBoustrophedon(middleVerse)
 	haiku[2] = TransformLastVerse(lastVerse)
 	return strings.Join(haiku, "\n")
 }
 
 func TransformFirstVerse(verse string) string {
-	return strings.ToUpper(verse[0:1]) + verse[1:]
+	verse = strings.ToUpper(verse[0:1]) + verse[1:]
+	return CutLine(verse)
 }
 
 func TransformLastVerse(verse string) string {
@@ -47,4 +49,28 @@ func TransformLastVerse(verse string) string {
 		verse += "."
 	}
 	return verse
+}
+
+func CreateBoustrophedon(verse string) string {
+	words := strings.Split(verse, " ")
+	invertedWords := make([]string, len(words))
+	index := 0
+	for i := len(words) - 1; i >= 0; i-- {
+		if len(words[i]) > 3 {
+			invertedWords[index] = words[i]
+			index += 1
+		}
+	}
+	newVerse := strings.Join(invertedWords, " ")
+	newVerse = CutLine(strings.TrimSpace(newVerse))
+	return newVerse
+}
+
+func CutLine(verse string) string {
+	char := verse[len(verse)-1:]
+	if char != "," && char != ":" {
+		verse += ","
+	}
+	return verse
+
 }
