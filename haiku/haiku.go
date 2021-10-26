@@ -30,5 +30,6 @@ func CreateHaiku(jsonFile string) string {
 	haiku[0] = haikus[rand.Intn(max)].A
 	haiku[1] = haikus[rand.Intn(max)].B
 	haiku[2] = haikus[rand.Intn(max)].C
-	return strings.Join(haiku, "\n")
+	wholeHaiku := strings.Join(haiku, "\n")
+	return strings.ToLower(wholeHaiku)
 }
