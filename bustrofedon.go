@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/yaderv/bustrofedon/corpus"
-	"github.com/yaderv/bustrofedon/haiku"
+	"github.com/yaderv/bustrofedon/poem"
 )
 
 // Strip trailing whitespace and comments
@@ -21,7 +21,7 @@ func CreateJSON(inputFile string) {
 
 func main() {
 	source := flag.String("source", "", "The input file to build the haikus source")
-	create := flag.Bool("haiku", false, "Create a haiku based on the haikus source")
+	poemType := flag.String("type", "haiku", "Poem type: haiku | quartet")
 	flag.Parse()
 
 	if *source != "" {
@@ -29,9 +29,14 @@ func main() {
 		CreateJSON(*source)
 	}
 
-	if *create {
-		haiku := haiku.CreateHaiku(OUTPUTFILE)
+	if *poemType == "haiku" {
+		haiku := poem.CreateHaiku(OUTPUTFILE)
 		fmt.Println(haiku)
+	} else if *poemType == "quartet" {
+		haiku := poem.CreateQuartet(OUTPUTFILE)
+		fmt.Println(haiku)
+	} else {
+		fmt.Println("Type option should be haiku or quartet")
 	}
 
 }
